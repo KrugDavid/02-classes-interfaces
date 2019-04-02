@@ -59,10 +59,24 @@ public class SimpleListTest {
 
 	@Test
 	void testFilterLambda(){
+		//Lambda möglich da funktionalInterface
 		SimpleListImpl result = (SimpleListImpl) testList.filter(o -> ((int)o) % 2 == 0);
 		for(Object o : result){
 			int i = (int)o;
 			assertTrue(i % 2 == 0);
 		}
+	}
+
+	//Lambda kann sich keine Status merken --> anonyme Klasse notwendig
+	@Test
+	void testDrittesElement()
+	{
+		SimpleListImpl result = (SimpleListImpl) testList.filter(new SimpleFilter() {
+			int count = 0;
+			@Override
+			public boolean include(Object item) {
+				return ++count % 3 == 0;
+			}
+		});
 	}
 }
